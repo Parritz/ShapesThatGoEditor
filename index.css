@@ -29,10 +29,52 @@ html, body {
     background-color: #f0f0f0;
     border-bottom: 2px solid black;
     flex-shrink: 0;
+    margin: 0;
 }
 
 #scene {
     display: block;
     image-rendering: pixelated;
     flex: 1;
+}
+
+#block {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: blue;
+}
+
+#playButton {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+}
+
+#playButton img {
+    width: 16px;
+    height: 16px;
+    filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+ul li {
+    display: inline-block;
+    margin: 0;
+    list-style: none;
+    cursor: pointer;
+}
+
+#tilePicker {
+    margin: 10px;
 }

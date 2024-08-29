@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML/CSS Layout</title>
-    <link rel="stylesheet" href="index.css">        
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shapes That Go Editor</title>
+	<link rel="stylesheet" href="index.css">        
 </head>
 <body>
-    <div id="container">
-        <div id="sidebar"></div>
-        <div id="main-content">
-            <div id="topbar"></div>
-            <canvas id="scene"></canvas>
-        </div>
-    </div>
-    <script src="js/index.js"></script>
+	<div id="container">
+		<div id="sidebar">
+			<div>
+				<ul id="tilePicker">
+					<li><img data-tileId="0" src="images/player.png" onclick="tileClicked(this)"></li>
+					<li><img data-tileId="1" src="images/player.png" onclick="tileClicked(this)"></li>
+					<li><img data-tileId="2" src="images/player.png" onclick="tileClicked(this)"></li>
+					<li><div data-tileId="3" id="block" onclick="tileClicked(this)"></div></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main-content">
+			<div id="topbar">
+				<ul>
+					<li>
+						<div id="playButton">
+							<img src="images/playArrow.png">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<canvas id="scene"></canvas>
+		</div>
+	</div>
+	<script src="js/index.js"></script>
 </body>
 </html>
