@@ -6,6 +6,7 @@ const boxWidth = 75;
 const boxHeight = 75;
 let mouseDown = false;
 
+// Block Ids
 // air: 0
 // block: 1
 // spike: 2
@@ -14,11 +15,7 @@ let mouseDown = false;
 // DJ: 5
 // Shield: 6
 // Pog: 7
-const tileIds = [
-	
-]
 
-// @ts-ignore
 scene.canvas.addEventListener("mousemove", onMouseMove, false);
 scene.canvas.addEventListener("mousedown", onMouseDown, false);
 scene.canvas.addEventListener("mouseup", () => {
@@ -48,14 +45,17 @@ function tileClicked(tilePicked: HTMLImageElement) {
 	currentTile = tilePicked;
 }
 
-function getTileFromId(id: number) {
-	for (const child of tilePickerElement.children) {
-		// @ts-ignore
-		console.log(child.dataset.tileId);
+function getTileFromId(id: string): HTMLImageElement | HTMLDivElement | undefined {
+	for (const child of document.getElementsByClassName("tile") as HTMLCollectionOf<HTMLElement>) {
+		if (child.dataset.tileid == id) {
+			if (child instanceof HTMLImageElement) {
+				return child;
+			} else if (child instanceof HTMLDivElement) {
+				return child;
+			}
+		}
 	}
 }
-
-console.log(getTileFromId(1));
 
 function getBoxPosition(x: number, y: number) {
 	const boxX = Math.floor(x / boxWidth);
@@ -72,8 +72,8 @@ function checkIfBoxFilled(x: number, y: number) {
 	return false;
 }
 
-const filledBoxes: {boxX: number, boxY: number, tileID: number}[] = [];
-function renderBox(boxX: number, boxY: number, tileID: number) {
+const filledBoxes: {boxX: number, boxY: number, tileID: string}[] = [];
+function renderBox(boxX: number, boxY: number, tileID: string) {
 	const boxPositionX = boxWidth * boxX;
 	const boxPositionY = boxHeight * boxY;
 
@@ -82,10 +82,11 @@ function renderBox(boxX: number, boxY: number, tileID: number) {
 	scene.lineTo(boxPositionX + boxWidth, boxPositionY + boxHeight);
 	scene.stroke();
 	
-	if (currentTile) {
-		if (currentTile.src) {
+	const tile = getTileFromId(tileID);
+	if (tile) {
+		if (tile instanceof HTMLImageElement) {
 			const image = new Image();
-			image.src = currentTile.src;
+			image.src = tile.src;
 			image.sizes = "20px"
 			scene.drawImage(image, boxPositionX, boxPositionY, boxWidth, boxHeight);
 			scene.strokeRect(boxPositionX, boxPositionY, boxWidth, boxHeight);
@@ -109,7 +110,7 @@ function fillBox(mouseX: number, mouseY: number) {
 	filledBoxes.push({
 		boxX,
 		boxY,
-		tileID: 1
+		tileID: currentTile?.dataset.tileid!
 	});
 }
 
@@ -155,7 +156,6 @@ function update() {
 
 	requestAnimationFrame(update);
 }
-
 
 window.onload = function() {
 	requestAnimationFrame(update);

@@ -49,11 +49,12 @@ html, body {
     display: flex;
     width: 32px;
     height: 32px;
-    background-color: white;
+    background-color: #d8d4d4;
     border-radius: 100%;
     justify-content: center;
     align-items: center;
     margin: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
 #playButton img {
