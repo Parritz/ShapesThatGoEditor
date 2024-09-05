@@ -1,4 +1,4 @@
-import { Tiles } from "./tiles";
+import { Tiles } from "./tiles.js";
 
 export class Renderer {
     public scene: CanvasRenderingContext2D;
@@ -8,7 +8,13 @@ export class Renderer {
     constructor() {
         this.sceneElement = document.getElementById("scene") as HTMLCanvasElement;
         this.scene = this.sceneElement.getContext("2d") as CanvasRenderingContext2D; // Cast this because it will always be available
-        requestAnimationFrame(this.update);
+        this.resizeCanvas();
+
+        window.addEventListener("resize", () => {
+            this.resizeCanvas;
+        });
+
+        requestAnimationFrame(this.update.bind(this));
     }
 
     resizeCanvas() {
@@ -45,8 +51,6 @@ export class Renderer {
     }
 
     update() {
-        this.resizeCanvas();
-
         // Render vertical grid lines
         for (let i = 0; i < this.scene.canvas.width; i++) {
             this.scene.beginPath();
@@ -71,6 +75,6 @@ export class Renderer {
         this.scene.fillStyle = "red";
         this.scene.fillRect(0, 0, 75, 75);
     
-        requestAnimationFrame(this.update);
+        requestAnimationFrame(this.update.bind(this));
     }
 }

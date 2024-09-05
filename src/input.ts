@@ -1,15 +1,12 @@
-import { Tiles } from "./tiles";
+import { Tiles } from "./tiles.js";
 
 export class Input {
     public mouseDown = false;
 
     constructor(scene: CanvasRenderingContext2D) {
-        scene.canvas.addEventListener("mousemove", this.onMouseMove, false);
-        scene.canvas.addEventListener("mousedown", this.onMouseDown, false);
-        scene.canvas.addEventListener("mouseup", () => {
-            this.mouseDown = false;
-        }, false);
-        scene.canvas.addEventListener("mouseout", () => {
+        scene.canvas.addEventListener("mousemove", this.onMouseMove.bind(this), false);
+        scene.canvas.addEventListener("mousedown", this.onMouseDown.bind(this), false);
+        window.addEventListener("mouseup", () => {
             this.mouseDown = false;
         }, false);
     }
