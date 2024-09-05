@@ -22,14 +22,15 @@ export class Renderer {
         this.scene.canvas.height = this.sceneElement.clientHeight;
     }
 
-    renderBox(boxX: number, boxY: number, tileID: string) {
-        const boxPositionX = Tiles.boxWidth * boxX;
-        const boxPositionY = Tiles.boxHeight * boxY;
+    renderBox(tileX: number, tileY: number, tileID: string) {
+        const boxPositionX = Tiles.boxWidth * tileX;
+        const boxPositionY = Tiles.boxHeight * tileY;
 
-        this.scene.beginPath();
-        this.scene.moveTo(boxPositionX, boxPositionY);
-        this.scene.lineTo(boxPositionX + Tiles.boxWidth, boxPositionY + Tiles.boxHeight);
-        this.scene.stroke();
+        // No more wireframe
+        // this.scene.beginPath();
+        // this.scene.moveTo(boxPositionX, boxPositionY);
+        // this.scene.lineTo(boxPositionX + Tiles.boxWidth, boxPositionY + Tiles.boxHeight);
+        // this.scene.stroke();
         
         const tile = Tiles.getTileFromId(tileID);
         if (tile) {
@@ -41,16 +42,36 @@ export class Renderer {
                 this.scene.strokeRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
                 this.scene.fillStyle = "#000";
             } else {
-                this.scene.fillStyle = "blue";
-                this.scene.lineWidth = 1;
-                this.scene.fillRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
-                this.scene.strokeRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
-                this.scene.fillStyle = "#000";
+                const tileId = tile.dataset.tileid;
+                
+                switch (tileId) {
+                    case "0": {
+                        for (let i = 0; i < Tiles.filledBoxes.length; i++) {
+                            const filledBox = Tiles.filledBoxes[i];
+                            console.log(filledBox);
+                            if (filledBox.tileX == tileX && filledBox.tileY == tileY) {
+                                console.log("boom");
+                                Tiles.filledBoxes.splice(i, 1);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case "1": {
+                        this.scene.fillStyle = "blue";
+                        this.scene.lineWidth = 1;
+                        this.scene.fillRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
+                        this.scene.strokeRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
+                        this.scene.fillStyle = "#000";
+                        break;
+                    }
+                }
             }
         }
     }
 
     update() {
+        this.scene.clearRect(0, 0, this.scene.canvas.width, this.scene.canvas.height);
         // Render vertical grid lines
         for (let i = 0; i < this.scene.canvas.width; i++) {
             this.scene.beginPath();
@@ -71,9 +92,6 @@ export class Renderer {
         for (const filledBox of Tiles.filledBoxes) {
             this.renderBox(filledBox.tileX, filledBox.tileY, filledBox.tileID);
         }
-    
-        this.scene.fillStyle = "red";
-        this.scene.fillRect(0, 0, 75, 75);
     
         requestAnimationFrame(this.update.bind(this));
     }

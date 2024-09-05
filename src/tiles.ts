@@ -46,6 +46,10 @@ export abstract class Tiles {
     }
 
     static checkIfTileFilled(x: number, y: number) {
+        if (this.currentTile?.dataset.tileid == "0") {
+            return false;
+        }
+
         for (const filledBox of Tiles.filledBoxes) {
             if (filledBox.tileX == x && filledBox.tileY == y) {
                 return true;
@@ -65,5 +69,11 @@ export abstract class Tiles {
             tileY,
             tileID: this.currentTile?.dataset.tileid!
         });
+    }
+}
+
+export abstract class SpikeTile {
+    draw() {
+        
     }
 }

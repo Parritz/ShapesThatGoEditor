@@ -11,9 +11,9 @@
 		<div id="sidebar">
 			<div>
 				<ul id="tilePicker">
-					<li><img data-tileId="0" class="tile" src="images/player.png" onclick="tileClicked(this)"></li>
-					<li><img data-tileId="1" class="tile" src="images/player.png" onclick="tileClicked(this)"></li>
-					<li><div data-tileId="3" class="tile" id="block" onclick="tileClicked(this)"></div></li>
+					<li><div data-tileId="0" class="tile" id="air" onclick="Tiles.tileClicked(this)"></div></li>
+					<li><div data-tileId="1" class="tile" id="block" onclick="Tiles.tileClicked(this)"></div></li>
+					<li><img data-tileId="2" class="tile" onclick="Tiles.tileClicked(this)" src="images/spike.png"></img></li>
 				</ul>
 			</div>
 		</div>
@@ -21,8 +21,11 @@
 			<div id="topbar">
 				<ul>
 					<li>
-						<div id="playButton">
+						<div class="button" id="playButton">
 							<img src="images/playArrow.png">
+						</div>
+						<div class="button" id="export">
+							<img src="images/export.png">
 						</div>
 					</li>
 				</ul>
