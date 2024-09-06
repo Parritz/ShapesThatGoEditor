@@ -65,6 +65,9 @@ export class Renderer {
                         this.scene.fillStyle = "#000";
                         break;
                     }
+                    case "2": {
+                        
+                    }
                 }
             }
         }
