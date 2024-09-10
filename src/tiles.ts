@@ -60,7 +60,7 @@ export abstract class Tiles {
 
     static fillBox(mouseX: number, mouseY: number) {
         const { tileX, tileY } = this.getTilePosition(mouseX, mouseY);
-        if (this.checkIfTileFilled(tileX, tileY)) {
+        if (this.checkIfTileFilled(tileX, tileY) || !this.currentTile) {
             return;
         }
 

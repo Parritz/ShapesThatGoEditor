@@ -21,6 +21,18 @@ export class Input {
     
     onMouseDown(event: MouseEvent) {
         this.mouseDown = true;
-        Tiles.fillBox(event.offsetX, event.offsetY);
+        switch (event.button) {
+            // Left click
+            case 0: {
+                Tiles.fillBox(event.offsetX, event.offsetY);
+                break;
+            }
+
+            // Right click
+            case 2: {
+                console.log("Right click")
+                break;
+            }
+        }
     }
 }
