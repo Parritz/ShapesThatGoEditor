@@ -1,7 +1,6 @@
-import { Input } from "./input.js";
-import { Renderer } from "./renderer.js";
-import { Tiles } from "./tiles.js";
-
+import { Input } from "./input";
+import { Renderer } from "./renderer";
+import { Tiles } from "./tiles";
 
 (window as any).Tiles = Tiles;
 window.onload = function() {

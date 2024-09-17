@@ -33,26 +33,26 @@
 					</li>
 				</ul>
 			</div>
-			<canvas oncontextmenu="return false;" id="scene"></canvas>
-			<!-- <canvas id="canvas"></canvas> -->
+			<!-- <canvas oncontextmenu="return false;" id="scene"></canvas> -->
+			<canvas id="canvas"></canvas>
 		</div>
 	</div>
-	<script type="module" src="js/index.js"></script>
-	<!-- <script src="js/game/mathfunctions.js"></script>
-    <script src="js/game/collision.js"></script>
-    <script src="js/game/chunks.js"></script>
-    <script src="js/game/drawlevel.js"></script>
-    <script src="js/game/level_objects.js"></script>
-    <script src="js/game/Player.js"></script>
-    <script src="js/game/playercollisions.js"></script>
-    <script src="js/game/particle.js"></script>
-    <script src="js/game/explode.js"></script>
-    <script src="js/game/drawobjects.js"></script>
-    <script src="js/game/chunk.js"></script>
-    <script src="js/game/findLongestSubArray.js"></script>
-    <script src="js/game/cookies.js"></script>
-    <script src="js/game/index.js"></script> -->
-	<!-- <style>
+	<!-- <script type="module" src="dist/main.bundle.js"></script> -->
+	<script src="gameSrc/mathfunctions.js"></script>
+    <script src="gameSrc/collision.js"></script>
+    <script src="gameSrc/chunks.js"></script>
+    <script src="gameSrc/drawlevel.js"></script>
+    <script src="gameSrc/level_objects.js"></script>
+    <script src="gameSrc/Player.js"></script>
+    <script src="gameSrc/playercollisions.js"></script>
+    <script src="gameSrc/particle.js"></script>
+    <script src="gameSrc/explode.js"></script>
+    <script src="gameSrc/drawobjects.js"></script>
+    <script src="gameSrc/chunk.js"></script>
+    <script src="gameSrc/findLongestSubArray.js"></script>
+    <script src="gameSrc/cookies.js"></script>
+    <script src="gameSrc/index.js"></script> -->
+    <style>
         canvas {
 
             position: absolute;
@@ -84,7 +84,7 @@
 
         @font-face {
             font-family: CoolFont;
-            src: url(fonts/pixelfont.TTF)
+            src: url(gameSrc/fonts/pixelfont.TTF)
         }
 
         #death_text {
@@ -126,6 +126,6 @@
             background: linear-gradient(to bottom, #b34332 5%, #a73f2d 100%);
             background-color: #b34332;
         }
-    </style> -->
+    </style>
 </body>
 </html>

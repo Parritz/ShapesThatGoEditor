@@ -1,4 +1,4 @@
-import { Tiles } from "./tiles.js";
+import { Tiles } from "./tiles";
 
 export class Renderer {
     public scene: CanvasRenderingContext2D;
@@ -25,12 +25,6 @@ export class Renderer {
     renderBox(tileX: number, tileY: number, tileID: string) {
         const boxPositionX = Tiles.boxWidth * tileX;
         const boxPositionY = Tiles.boxHeight * tileY;
-
-        // No more wireframe
-        // this.scene.beginPath();
-        // this.scene.moveTo(boxPositionX, boxPositionY);
-        // this.scene.lineTo(boxPositionX + Tiles.boxWidth, boxPositionY + Tiles.boxHeight);
-        // this.scene.stroke();
         
         const tile = Tiles.getTileFromId(tileID);
         if (tile) {

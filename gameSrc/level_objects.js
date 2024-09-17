@@ -136,7 +136,7 @@ class Powerup {
         this.name = name;
 
         console.log(this.type)
-        this.img.src = "game/sprites/powerups/"+this.type+".png";
+        this.img.src = "gameSrc/sprites/powerups/"+this.type+".png";
     }
 
     draw(){
@@ -169,7 +169,7 @@ class Pog {
         this.magnetSpd = Math.floor(Math.random() * (25 - 20) + 20)
 
         this.img = new Image();
-        this.img.src = "game/sprites/pogs/CP"+img+".png";
+        this.img.src = "gameSrc/sprites/pogs/CP"+img+".png";
 
     }
 

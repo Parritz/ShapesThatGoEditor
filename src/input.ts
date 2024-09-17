@@ -1,4 +1,4 @@
-import { Tiles } from "./tiles.js";
+import { Tiles } from "./tiles";
 
 export class Input {
     public mouseDown = false;

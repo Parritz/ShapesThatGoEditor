@@ -79,8 +79,8 @@ const globalPogImg = Math.round(Math.random() * 15) + 1;
 
 var gravImgs = {
 
-    "-1": "game/sprites/arrows/up.png",
-    "1": "game/sprites/arrows/down.png"
+    "-1": "gameSrc/sprites/arrows/up.png",
+    "1": "gameSrc/sprites/arrows/down.png"
 
 };
 
