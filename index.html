@@ -14,7 +14,8 @@
 					<li><div data-tileId="0" class="tile" id="air" onclick="Tiles.tileClicked(this)"></div></li>
 					<li><div data-tileId="1" class="tile" id="block" onclick="Tiles.tileClicked(this)"></div></li>
 					<li><img data-tileId="2" class="tile" onclick="Tiles.tileClicked(this)" src="images/spike.png"></img></li>
-				</ul>
+                    <li><img data-tileId="3" class="tile" onclick="Tiles.tileClicked(this)" src="images/spike.png" style="transform: rotate(180deg)"></img></li>
+                </ul>
                 <ul>
 
                 </ul>
@@ -33,12 +34,12 @@
 					</li>
 				</ul>
 			</div>
-			<!-- <canvas oncontextmenu="return false;" id="scene"></canvas> -->
-			<canvas id="canvas"></canvas>
+			<canvas oncontextmenu="return false;" id="scene"></canvas>
+			<!-- <canvas id="canvas"></canvas> -->
 		</div>
 	</div>
-	<!-- <script type="module" src="dist/main.bundle.js"></script> -->
-	<script src="gameSrc/mathfunctions.js"></script>
+	<script type="module" src="dist/main.bundle.js"></script>
+	<!-- <script src="gameSrc/mathfunctions.js"></script>
     <script src="gameSrc/collision.js"></script>
     <script src="gameSrc/chunks.js"></script>
     <script src="gameSrc/drawlevel.js"></script>
@@ -53,7 +54,7 @@
     <script src="gameSrc/cookies.js"></script>
     <script src="gameSrc/index.js"></script> -->
     <style>
-        canvas {
+        /* canvas {
 
             position: absolute;
             top: 0px;
@@ -61,7 +62,7 @@
             image-rendering: pixelated;
             z-index: -1;
 
-        }
+        } */
 
         body {
 
@@ -125,7 +126,7 @@
         .myButton:hover {
             background: linear-gradient(to bottom, #b34332 5%, #a73f2d 100%);
             background-color: #b34332;
-        }
+        } -->
     </style>
 </body>
 </html>
