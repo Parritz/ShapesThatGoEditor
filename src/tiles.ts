@@ -71,9 +71,3 @@ export abstract class Tiles {
         });
     }
 }
-
-export abstract class SpikeTile {
-    draw() {
-        
-    }
-}

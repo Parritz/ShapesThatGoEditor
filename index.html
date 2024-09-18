@@ -16,10 +16,13 @@
 					<li><img data-tileId="2" class="tile" onclick="Tiles.tileClicked(this)" src="images/spike.png"></img></li>
                     <li><img data-tileId="3" class="tile" onclick="Tiles.tileClicked(this)" src="images/spike.png" style="transform: rotate(180deg)"></img></li>
                 </ul>
-                <ul>
-
-                </ul>
 			</div>
+            <div id="abc">
+                <ul>
+                    <li><button class="level">1</button></li>
+                    <li><button class="level">+</button></li>
+                </ul>
+            </div>
 		</div>
 		<div id="main-content">
 			<div id="topbar">
@@ -28,7 +31,7 @@
 						<div class="button" id="playButton">
 							<img src="images/playArrow.png">
 						</div>
-						<div class="button" id="export">
+						<div class="button" id="export" onclick="exportLevel()">
 							<img src="images/export.png">
 						</div>
 					</li>

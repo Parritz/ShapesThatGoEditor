@@ -28,65 +28,11 @@ export class Renderer {
         
         const tile = Tiles.getTileFromId(tileID);
         if (tile) {
-            // if (tile instanceof HTMLImageElement) {
-            //     const image = new Image();
-            //     image.src = tile.src;
-            //     image.sizes = "20px"
-            //     this.scene.drawImage(image, boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
-            //     this.scene.strokeRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
-            //     this.scene.fillStyle = "#000";
-            // } else {
-            //     const tileId = tile.dataset.tileid;
-                
-            //     switch (tileId) {
-            //         case "0": {
-            //             for (let i = 0; i < Tiles.filledBoxes.length; i++) {
-            //                 const filledBox = Tiles.filledBoxes[i];
-            //                 console.log(filledBox);
-            //                 if (filledBox.tileX == tileX && filledBox.tileY == tileY) {
-            //                     Tiles.filledBoxes.splice(i, 1);
-            //                     break;
-            //                 }
-            //             }
-            //             break;
-            //         }
-            //         case "1": {
-            //             this.scene.fillStyle = "blue";
-            //             this.scene.lineWidth = 1;
-            //             this.scene.fillRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
-            //             this.scene.strokeRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
-            //             this.scene.fillStyle = "#000";
-            //             break;
-            //         }
-            //         case "2": {
-            //             this.scene.fillStyle = "yellow";
-            //             this.scene.beginPath();
-            //             this.scene.moveTo(boxPositionX, boxPositionY + Tiles.boxHeight);
-            //             this.scene.lineTo(boxPositionX + Tiles.boxWidth, boxPositionY + Tiles.boxHeight);
-            //             this.scene.lineTo(boxPositionX + Tiles.boxWidth / 2, boxPositionY);
-            //             this.scene.fill();
-            //             this.scene.fillStyle = "#000";
-            //             break;
-            //         }
-            //         case "3": {
-            //             this.scene.fillStyle = "yellow";
-            //             this.scene.beginPath();
-            //             this.scene.moveTo(boxPositionX + Tiles.boxWidth / 2, boxPositionY + Tiles.boxHeight + 5);
-            //             this.scene.lineTo(boxPositionX, boxPositionY);
-            //             this.scene.lineTo(boxPositionX + Tiles.boxWidth, boxPositionY);
-            //             this.scene.fill();
-            //             this.scene.fillStyle = "#000";
-            //             break;
-            //         }
-            //     }
-            // }
-
             const tileId = tile.dataset.tileid;
             switch (tileId) {
-                case "0": {
+                case "0": { // Air
                     for (let i = 0; i < Tiles.filledBoxes.length; i++) {
                         const filledBox = Tiles.filledBoxes[i];
-                        console.log(filledBox);
                         if (filledBox.tileX == tileX && filledBox.tileY == tileY) {
                             Tiles.filledBoxes.splice(i, 1);
                             break;
@@ -94,7 +40,7 @@ export class Renderer {
                     }
                     break;
                 }
-                case "1": {
+                case "1": { // Block
                     this.scene.fillStyle = "blue";
                     this.scene.lineWidth = 1;
                     this.scene.fillRect(boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
@@ -102,7 +48,7 @@ export class Renderer {
                     this.scene.fillStyle = "#000";
                     break;
                 }
-                case "2": {
+                case "2": { // Spike
                     this.scene.fillStyle = "yellow";
                     this.scene.beginPath();
                     this.scene.moveTo(boxPositionX, boxPositionY + Tiles.boxHeight);
@@ -111,7 +57,7 @@ export class Renderer {
                     this.scene.fill();
                     break;
                 }
-                case "3": {
+                case "3": { // Upside down spike
                     this.scene.fillStyle = "yellow";
                     this.scene.beginPath();
                     this.scene.moveTo(boxPositionX + Tiles.boxWidth / 2, boxPositionY + Tiles.boxHeight + 5);
@@ -127,10 +73,10 @@ export class Renderer {
     update() {
         this.scene.clearRect(0, 0, this.scene.canvas.width, this.scene.canvas.height);
 
-// Render all the blocks which have been filled
-for (const filledBox of Tiles.filledBoxes) {
-    this.renderBox(filledBox.tileX, filledBox.tileY, filledBox.tileID);
-}
+        // Render all the blocks which have been filled
+        for (const filledBox of Tiles.filledBoxes) {
+            this.renderBox(filledBox.tileX, filledBox.tileY, filledBox.tileID);
+        }
 
         // Render vertical grid lines
         for (let i = 0; i < this.scene.canvas.width; i++) {
