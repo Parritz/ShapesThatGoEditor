@@ -41,31 +41,43 @@ export abstract class Tiles {
         }
     }
 
-    static getTilePosition(x: number, y: number) {
-        const tileX = Math.floor(x / Tiles.boxWidth + Renderer.cameraX);
-        const tileY = Math.floor(y / Tiles.boxHeight);
+    static getTilePosition(mouseX: number, mouseY: number) {
+        const tileX = Math.floor((mouseX + Renderer.cameraX) / Tiles.boxWidth);
+        const tileY = Math.floor(mouseY / Tiles.boxHeight);
         return { tileX, tileY };
     }
 
-    static checkIfTileFilled(x: number, y: number) {
-        if (this.currentTile?.dataset.tileid == "0") {
-            return false;
-        }
-
-        for (const filledBox of Tiles.filledBoxes) {
-            if (filledBox.tileX == x && filledBox.tileY == y) {
-                return true;
+    static removeTile(TileX: number, TileY: number) {
+        for (let i = 0; i < this.filledBoxes.length; i++) {
+            const filledBox = this.filledBoxes[i];
+            if (filledBox.tileX == TileX && filledBox.tileY == TileY) {
+                this.filledBoxes.splice(i, 1);
+                break;
             }
         }
-        return false;
     }
 
-    static fillBox(mouseX: number, mouseY: number) {
+    static removeTileFromMousePos(mouseX: number, mouseY: number) {
         const { tileX, tileY } = this.getTilePosition(mouseX, mouseY);
-        if (this.checkIfTileFilled(tileX, tileY) || !this.currentTile) {
+        this.removeTile(tileX, tileY);
+    }
+
+    static isTileOutOfBounds(tileX: number, tileY: number) {
+        if (tileX > 35 || tileX < 0) {
+            return true;
+        }
+        if (tileY > 10 || tileY < 0) {
+            return true;
+        }
+    }
+
+    static fillTile(mouseX: number, mouseY: number) {
+        const { tileX, tileY } = this.getTilePosition(mouseX, mouseY);
+        if (this.isTileOutOfBounds(tileX, tileY) || !this.currentTile) {
             return;
         }
 
+        this.removeTile(tileX, tileY);
         this.filledBoxes.push({
             tileX,
             tileY,

@@ -20,7 +20,7 @@ export class Renderer {
 
     handleScroll(event: WheelEvent) {
         event.preventDefault();
-        Renderer.cameraX += event.deltaY > 0 ? 20 : -20;
+        Renderer.cameraX -= event.deltaY > 0 ? 30 : -30;
     }
 
     resizeCanvas() {
@@ -37,13 +37,7 @@ export class Renderer {
             const tileId = tile.dataset.tileid;
             switch (tileId) {
                 case "0": { // Air
-                    for (let i = 0; i < Tiles.filledBoxes.length; i++) {
-                        const filledBox = Tiles.filledBoxes[i];
-                        if (filledBox.tileX == tileX && filledBox.tileY == tileY) {
-                            Tiles.filledBoxes.splice(i, 1);
-                            break;
-                        }
-                    }
+                    Tiles.removeTile(tileX, tileY);
                     break;
                 }
                 case "1": { // Block
@@ -72,6 +66,15 @@ export class Renderer {
                     this.scene.fill();
                     break;
                 }
+                default: {
+                    if (tile instanceof HTMLImageElement) {
+                        const image = new Image();
+                        image.src = tile.src;
+                        image.sizes = "20px"
+                        this.scene.drawImage(image, boxPositionX, boxPositionY, Tiles.boxWidth, Tiles.boxHeight);
+                    }
+                    break;
+                }
             }
         }
     }
@@ -89,7 +92,7 @@ export class Renderer {
         this.scene.setLineDash([5, 5]);
 
         // Render vertical grid lines
-        for (let i = 0; i < 36; i++) {
+        for (let i = 0; i <= 36; i++) {
             this.scene.beginPath();
             this.scene.moveTo(Tiles.boxWidth * i - Renderer.cameraX, 0);
             this.scene.lineTo(Tiles.boxWidth * i - Renderer.cameraX, this.scene.canvas.height);
@@ -97,7 +100,7 @@ export class Renderer {
         }
     
         // Render horizontal grid lines
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i <= 10; i++) {
             this.scene.beginPath();
             this.scene.moveTo(0, Tiles.boxHeight * i);
             this.scene.lineTo(this.scene.canvas.width, Tiles.boxHeight*i);
