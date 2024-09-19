@@ -8,6 +8,8 @@
 // Shield: 6
 // Pog: 7
 
+import { Renderer } from "./renderer";
+
 export abstract class Tiles {
     public static boxWidth = 75;
     public static boxHeight = 75;
@@ -40,7 +42,7 @@ export abstract class Tiles {
     }
 
     static getTilePosition(x: number, y: number) {
-        const tileX = Math.floor(x / Tiles.boxWidth);
+        const tileX = Math.floor(x / Tiles.boxWidth + Renderer.cameraX);
         const tileY = Math.floor(y / Tiles.boxHeight);
         return { tileX, tileY };
     }

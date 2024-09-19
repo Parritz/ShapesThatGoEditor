@@ -1,20 +1,26 @@
-import { Tiles } from "./tiles";
+import { Tiles } from './tiles';
 
 export class Renderer {
     public scene: CanvasRenderingContext2D;
     public sceneElement: HTMLCanvasElement;
     public currentTile: HTMLImageElement | undefined | null;
+    public static cameraX: number = 0;
 
     constructor() {
         this.sceneElement = document.getElementById("scene") as HTMLCanvasElement;
         this.scene = this.sceneElement.getContext("2d") as CanvasRenderingContext2D; // Cast this because it will always be available
         this.resizeCanvas();
 
-        window.addEventListener("resize", () => {
-            this.resizeCanvas;
+        this.scene.canvas.addEventListener("wheel", (event) => {
+            this.handleScroll(event);
         });
 
         requestAnimationFrame(this.update.bind(this));
+    }
+
+    handleScroll(event: WheelEvent) {
+        event.preventDefault();
+        Renderer.cameraX += event.deltaY > 0 ? 20 : -20;
     }
 
     resizeCanvas() {
@@ -23,7 +29,7 @@ export class Renderer {
     }
 
     renderBox(tileX: number, tileY: number, tileID: string) {
-        const boxPositionX = Tiles.boxWidth * tileX;
+        const boxPositionX = Tiles.boxWidth * tileX - Renderer.cameraX;
         const boxPositionY = Tiles.boxHeight * tileY;
         
         const tile = Tiles.getTileFromId(tileID);
@@ -71,6 +77,7 @@ export class Renderer {
     }
 
     update() {
+        this.resizeCanvas();
         this.scene.clearRect(0, 0, this.scene.canvas.width, this.scene.canvas.height);
 
         // Render all the blocks which have been filled
@@ -78,22 +85,25 @@ export class Renderer {
             this.renderBox(filledBox.tileX, filledBox.tileY, filledBox.tileID);
         }
 
+        // Allow zooming out of the grid
+        this.scene.setLineDash([5, 5]);
+
         // Render vertical grid lines
-        for (let i = 0; i < this.scene.canvas.width; i++) {
+        for (let i = 0; i < 36; i++) {
             this.scene.beginPath();
-            this.scene.moveTo(Tiles.boxWidth * i, 0);
-            this.scene.lineTo(Tiles.boxWidth * i, this.scene.canvas.height);
+            this.scene.moveTo(Tiles.boxWidth * i - Renderer.cameraX, 0);
+            this.scene.lineTo(Tiles.boxWidth * i - Renderer.cameraX, this.scene.canvas.height);
             this.scene.stroke();
         }
     
         // Render horizontal grid lines
-        for (let i = 0; i < this.scene.canvas.width; i++) {
+        for (let i = 0; i < 10; i++) {
             this.scene.beginPath();
             this.scene.moveTo(0, Tiles.boxHeight * i);
             this.scene.lineTo(this.scene.canvas.width, Tiles.boxHeight*i);
             this.scene.stroke();
         }
-    
+
         requestAnimationFrame(this.update.bind(this));
     }
 }
