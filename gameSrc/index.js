@@ -279,30 +279,30 @@ function update(timestamp) {
             //deathText.innerHTML = deathMessages[Math.round(Math.random()*deathMessages.length)-1];
             chicken = true;
         }
-        deathScreen.style.visibility = "visible";
-        deathText.style.visibility = 'visible';
-        if (score > highscore) {
-            highscore = score;
-            fetch("/submiths", {
-                method: "POST",
-                body: JSON.stringify({
-                    score: score
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            });
-            scoreText.innerHTML = 'SCORE: ' + score;
-            deathText.style.visibility = 'visible';
-            deathMsg.innerHTML = 'NEW HIGH SCORE!';
-            deathMsg.style.color = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')';
-            // setCookie("highscore", String(score), 400);
-            setTimeout(function () { canRestart = true }, 1000);
-        } else {
-            scoreText.innerHTML = 'SCORE: ' + score;
-            deathText.style.visibility = 'visible';
-            canRestart = true
-        }
+        // deathScreen.style.visibility = "visible";
+        // deathText.style.visibility = 'visible';
+        // if (score > highscore) {
+        //     highscore = score;
+        //     fetch("/submiths", {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             score: score
+        //         }),
+        //         headers: {
+        //             "Content-type": "application/json; charset=UTF-8"
+        //         }
+        //     });
+        //     scoreText.innerHTML = 'SCORE: ' + score;
+        //     deathText.style.visibility = 'visible';
+        //     deathMsg.innerHTML = 'NEW HIGH SCORE!';
+        //     deathMsg.style.color = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')';
+        //     // setCookie("highscore", String(score), 400);
+        //     setTimeout(function () { canRestart = true }, 1000);
+        // } else {
+        //     scoreText.innerHTML = 'SCORE: ' + score;
+        //     deathText.style.visibility = 'visible';
+        //     canRestart = true
+        // }
     }
 
     if (player.onGround) {
@@ -355,9 +355,7 @@ document.addEventListener('keyup', function (event) {
 
 });
 
-window.onload = function () {
-    requestAnimationFrame(update);
-}
+requestAnimationFrame(update);
 
 function shakeScreen(time) {
 

@@ -33,7 +33,7 @@
 			<div id="topbar">
 				<ul>
 					<li>
-						<div class="button" id="playButton">
+						<div class="button" id="playButton" onclick="playLevel()">
 							<img src="images/icons/playArrow.png">
 						</div>
 						<div class="button" id="export" onclick="exportLevel()">
@@ -42,11 +42,11 @@
 					</li>
 				</ul>
 			</div>
-			<canvas oncontextmenu="return false;" id="scene"></canvas>
-			<!-- <canvas id="canvas"></canvas> -->
+			<canvas oncontextmenu="return false;" id="scene" style="display: block;"></canvas>
+			<canvas id="canvas" style="display: none;"></canvas>
 		</div>
 	</div>
-	<script type="module" src="dist/main.bundle.js"></script>
+	<script src="dist/main.bundle.js"></script>
 	<!-- <script src="gameSrc/mathfunctions.js"></script>
     <script src="gameSrc/collision.js"></script>
     <script src="gameSrc/chunks.js"></script>
@@ -62,7 +62,7 @@
     <script src="gameSrc/cookies.js"></script>
     <script src="gameSrc/index.js"></script> -->
     <style>
-        /* canvas {
+        #canvas {
 
             position: absolute;
             top: 0px;
@@ -70,7 +70,7 @@
             image-rendering: pixelated;
             z-index: -1;
 
-        } */
+        }
 
         body {
 

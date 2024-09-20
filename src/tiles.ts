@@ -4,15 +4,15 @@
 // spike: 2
 // upside down spikes: 3
 // Bounce: 4
-// DJ: 5
+// Double Jump: 5
 // Shield: 6
 // Pog: 7
 
 import { Renderer } from "./renderer";
 
 export abstract class Tiles {
-    public static boxWidth = 75;
-    public static boxHeight = 75;
+    public static boxWidth: number;
+    public static boxHeight: number;
     public static currentTile: HTMLImageElement | undefined | null;
     public static filledBoxes: {tileX: number, tileY: number, tileID: string}[] = [];
     
@@ -66,7 +66,7 @@ export abstract class Tiles {
         if (tileX > 35 || tileX < 0) {
             return true;
         }
-        if (tileY > 10 || tileY < 0) {
+        if (tileY > 9 || tileY < 0) {
             return true;
         }
     }

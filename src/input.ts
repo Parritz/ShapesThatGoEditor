@@ -1,3 +1,4 @@
+import { Renderer } from "./renderer";
 import { Tiles } from "./tiles";
 
 export class Input {
@@ -10,6 +11,15 @@ export class Input {
         window.addEventListener("mouseup", () => {
             this.mouseDown = false;
         }, false);
+
+        scene.canvas.addEventListener("wheel", (event) => {
+            this.handleScroll(event);
+        });
+    }
+
+    handleScroll(event: WheelEvent) {
+        event.preventDefault();
+        Renderer.cameraX -= event.deltaY > 0 ? 40 : -40;
     }
 
     onMouseMove(event: MouseEvent) {
