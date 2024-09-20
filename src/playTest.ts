@@ -28,6 +28,12 @@ function loadGameScripts() {
     }
 }
 
+function unloadGameScripts() {
+    for (const loadedScript of loadedScripts) {
+        loadedScript.remove();
+    }
+}
+
 export function playLevel(useBaseLevels: boolean) {
     const editorCanvas = document.getElementById("scene") as HTMLCanvasElement;
     const gameCanvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -35,4 +41,13 @@ export function playLevel(useBaseLevels: boolean) {
     gameCanvas.style.display = "block";
     Renderer.isTicking = false;
     loadGameScripts();
+}
+
+export function stopLevel() {
+    const editorCanvas = document.getElementById("scene") as HTMLCanvasElement;
+    const gameCanvas = document.getElementById("canvas") as HTMLCanvasElement;
+    editorCanvas.style.display = "block";
+    gameCanvas.style.display = "none";
+    Renderer.isTicking = true;
+    unloadGameScripts();
 }

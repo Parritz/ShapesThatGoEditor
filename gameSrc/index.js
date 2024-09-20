@@ -21,7 +21,7 @@ var globalScrollSpd = scrollSpd;
 
 var chunks = [new Chunk(startingChunk, 0, 0, blockSize)]
 
-var player = new Player(stage.canvas.width / 4, 300, blockSize, blockSize, 'red', globalGravity, blockSize / 2);
+var player = new Player(stage.canvas.width / 4, 300, blockSize, blockSize, 'red', globalGravity, blockSize / 1.25);
 
 var blocks = [];
 
@@ -126,12 +126,22 @@ var latestChunk = chunks[0];
 
 var deltaTime = 0;
 var lastTimestamp = 0;
+let then = Date.now();
 
 chunks[0].create();
 
+function getDeltaTime(){
+    let now = Date.now()
+    let dt = (now - then);
+    then = now;
+
+    return dt / (1000 / 60);
+}
+
 function update(timestamp) {
 
-    var deltaTime = (timestamp - lastTimestamp) / 15;
+    // var deltaTime = (timestamp - lastTimestamp) / 15;
+    let deltaTime = this.getDeltaTime();
 
     stage.canvas.width = window.innerWidth;
     stage.canvas.height = window.innerHeight;
