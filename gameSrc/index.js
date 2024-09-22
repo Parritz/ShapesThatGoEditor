@@ -1,6 +1,6 @@
 var stage = document.getElementById('canvas').getContext('2d');
-stage.canvas.width = window.innerWidth;
-stage.canvas.height = window.innerHeight;
+stage.canvas.width = stage.canvas.clientWidth;
+stage.canvas.height = stage.canvas.clientHeight;
 
 stage.imageSmoothingEnabled = false;
 
@@ -21,7 +21,7 @@ var globalScrollSpd = scrollSpd;
 
 var chunks = [new Chunk(startingChunk, 0, 0, blockSize)]
 
-var player = new Player(stage.canvas.width / 4, 300, blockSize, blockSize, 'red', globalGravity, blockSize / 1.25);
+var player = new Player(stage.canvas.width / 4, 300, blockSize, blockSize, 'red', globalGravity, blockSize / 2);
 
 var blocks = [];
 
@@ -46,10 +46,6 @@ var deathText = document.getElementById('death_text');
 var deathMsg = document.getElementById('death_t')
 var scoreText = document.getElementById('score_t');
 var retryBtn = document.getElementById('death_button');
-
-var scoreX = 30;
-var scoreY = 80;
-var textSize = Math.round(stage.canvas.width / 35);
 
 var powerupX = stage.canvas.width / 1.2;
 var powerupY = 100;
@@ -79,8 +75,8 @@ const globalPogImg = Math.round(Math.random() * 15) + 1;
 
 var gravImgs = {
 
-    "-1": "gameSrc/sprites/arrows/up.png",
-    "1": "gameSrc/sprites/arrows/down.png"
+    "-1": "sprites/arrows/up.png",
+    "1": "sprites/arrows/down.png"
 
 };
 
@@ -124,12 +120,9 @@ var lastLevel = 0;
 player.currentChunk = chunks[0];
 var latestChunk = chunks[0];
 
-var deltaTime = 0;
-var lastTimestamp = 0;
-let then = Date.now();
-
 chunks[0].create();
 
+let then = Date.now();
 function getDeltaTime(){
     let now = Date.now()
     let dt = (now - then);
@@ -139,16 +132,18 @@ function getDeltaTime(){
 }
 
 function update(timestamp) {
+    let deltaTime = getDeltaTime();
 
-    // var deltaTime = (timestamp - lastTimestamp) / 15;
-    let deltaTime = this.getDeltaTime();
-
-    stage.canvas.width = window.innerWidth;
-    stage.canvas.height = window.innerHeight;
+    stage.canvas.width = stage.canvas.clientWidth;
+    stage.canvas.height = stage.canvas.clientHeight;
     stage.clearRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-    stage.canvas.style.left = screenShake ? String(Math.random() * (shakeAmount - -shakeAmount) + -shakeAmount) + "px" : 0; //Screenshake
-    stage.canvas.style.top = screenShake ? String(Math.random() * (shakeAmount - -shakeAmount) + -shakeAmount) + "px" : 0; //Screenshake
+    var scoreX = stage.canvas.width - 30;
+    var scoreY = stage.canvas.height + 80;
+    var textSize = Math.round(stage.canvas.width / 35);
+
+    // stage.canvas.style.left = screenShake ? String(Math.random() * (shakeAmount - -shakeAmount) + -shakeAmount) + "px" : 0; //Screenshake
+    // stage.canvas.style.top = screenShake ? String(Math.random() * (shakeAmount - -shakeAmount) + -shakeAmount) + "px" : 0; //Screenshake
 
     blockSize = Math.round(stage.canvas.height / latestChunk.chunk.length);
 
@@ -168,12 +163,12 @@ function update(timestamp) {
     var chunkRightSideX = latestChunk.chunkX + latestChunk.w;
     var chunkLeftSideX = latestChunk.chunkX;
 
-    for (let chunk = 0; chunk < chunks.length; chunk++) {
+    for (chunk = 0; chunk < chunks.length; chunk++) {
         chunks[chunk].draw();
         chunks[chunk].scroll(globalScrollSpd, player);
 
         if (player.x + player.w >= chunkLeftSideX) player.currentChunk = latestChunk;
-        for (let block = 0; block < chunks[chunk].blocks.length; block++) {
+        for (block = 0; block < chunks[chunk].blocks.length; block++) {
             if (chunks[chunk].blocks[block].x <= -200) {
                 chunks[chunk].blocks.splice(block, 1);
             }
@@ -186,7 +181,7 @@ function update(timestamp) {
         //if (randomLevel == lastLevel) randomLevel = lastLevel === 0 ? randomLevel + 1 : randomLevel - 1;
         lastLevel = randomLevel;
         chunksTillBonus--;
-        let isBonus = chunksTillBonus <= 0;
+        isBonus = chunksTillBonus <= 0;
         var newChunk = new Chunk(isBonus ? bonus : levels[randomLevel], player.currentChunk.chunkX + player.currentChunk.w, 0, blockSize);
         chunks.push(newChunk);
         newChunk.create();
@@ -205,7 +200,7 @@ function update(timestamp) {
     //stage.fillRect(textX-20,textY-textSize/1.25,String(score).length*38,textSize*1);
 
     stage.fillStyle = '#000';
-    if (!player.dead) stage.fillText(score, scoreX, scoreY);
+    if (!player.dead) stage.fillText(score, 50, 125);
     //stage.fillText(buttonPressed(0), scoreX, scoreY);
 
     //gravArrow.src = gravImgs[String(player.gravityDir)];
@@ -213,12 +208,12 @@ function update(timestamp) {
     //stage.drawImage(gravArrow, scoreX, scoreY+50, 75, 100);
 
 
-    for (let p = 0; p < player.activePowerups.length; p++) {
+    for (p = 0; p < player.activePowerups.length; p++) {
         powerup = player.activePowerups[p];
         if (powerup.expires) {
             powerupText = powerup.name + " " + Math.round(powerup.expireTime / 10);
             powerupX = stage.canvas.width - (powerupText.length * 25);
-            powerupY = 100 + (p) * 100;
+            powerupY = 100 + (p) * 50;
             /*if (powerup.expireTime < powerup.expireTimeOG / 4 && powerup.expires) {
                 stage.fillStyle = Math.random() * 100 <= 60 ? '#ff0000' : 'rgba(0,0,0,0)';
             } else {
@@ -226,12 +221,12 @@ function update(timestamp) {
             }*/
 
             if (!player.dead) {
-                stage.fillText(powerupText, powerupX - (powerupText.length * 20), powerupY);
+                stage.fillText(powerupText, powerupX - powerupText.length * 10, powerupY);
             }
         } else {
             powerupText = powerup.name + " " + Math.floor(powerup.uses);
             powerupX = stage.canvas.width - (powerupText.length * 25);
-            powerupY = 100 + (p) * 100;
+            powerupY = 100 + (p) * 50;
             stage.fillText(powerupText, powerupX - (powerupText.length * 20), powerupY);
         }
 
@@ -247,7 +242,7 @@ function update(timestamp) {
         chunks.splice(outChunk, 1);
     }
 
-    for (let p = 0; p < particles.length; p++) {
+    for (p = 0; p < particles.length; p++) {
         particles[p].draw();
         particles[p].physics();
         if (particles[p].y >= stage.canvas.height) {
@@ -255,7 +250,7 @@ function update(timestamp) {
         }
     }
 
-    for (let l = 0; l < labels.length; l++) {
+    for (l = 0; l < labels.length; l++) {
         labels[l].draw();
         if (labels[l].y <= -100) labels.splice(l, 1);
     }
@@ -263,7 +258,7 @@ function update(timestamp) {
     player.jumping = !player.onGround;
 
     if (player.magnet && player.x + player.w >= player.currentChunk.chunkX + player.currentChunk.w / 6) {
-        for (let p = 0; p < player.currentChunk.pogs.length; p++) {
+        for (p = 0; p < player.currentChunk.pogs.length; p++) {
             (function (i) {
                 var pog = player.currentChunk.pogs[i];
                 setTimeout(() => {
@@ -277,7 +272,7 @@ function update(timestamp) {
         player.draw();
         player.physics(deltaTime);
         player.update();
-        scoreCD--;
+        scoreCD -= deltaTime; 
         testPlayerCollisions(player.currentChunk);
     } else {
         if (!player.exploded) { //Make player explode if the player has not already exploded
@@ -289,30 +284,30 @@ function update(timestamp) {
             //deathText.innerHTML = deathMessages[Math.round(Math.random()*deathMessages.length)-1];
             chicken = true;
         }
-        // deathScreen.style.visibility = "visible";
-        // deathText.style.visibility = 'visible';
-        // if (score > highscore) {
-        //     highscore = score;
-        //     fetch("/submiths", {
-        //         method: "POST",
-        //         body: JSON.stringify({
-        //             score: score
-        //         }),
-        //         headers: {
-        //             "Content-type": "application/json; charset=UTF-8"
-        //         }
-        //     });
-        //     scoreText.innerHTML = 'SCORE: ' + score;
-        //     deathText.style.visibility = 'visible';
-        //     deathMsg.innerHTML = 'NEW HIGH SCORE!';
-        //     deathMsg.style.color = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')';
-        //     // setCookie("highscore", String(score), 400);
-        //     setTimeout(function () { canRestart = true }, 1000);
-        // } else {
-        //     scoreText.innerHTML = 'SCORE: ' + score;
-        //     deathText.style.visibility = 'visible';
-        //     canRestart = true
-        // }
+        deathScreen.style.visibility = "visible";
+        deathText.style.visibility = 'visible';
+        if (score > highscore) {
+            highscore = score;
+            fetch("/submiths", {
+                method: "POST",
+                body: JSON.stringify({
+                    score: score
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+            scoreText.innerHTML = 'SCORE: ' + score;
+            deathText.style.visibility = 'visible';
+            deathMsg.innerHTML = 'NEW HIGH SCORE!';
+            deathMsg.style.color = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')';
+            // setCookie("highscore", String(score), 400);
+            setTimeout(function () { canRestart = true }, 1000);
+        } else {
+            scoreText.innerHTML = 'SCORE: ' + score;
+            deathText.style.visibility = 'visible';
+            canRestart = true
+        }
     }
 
     if (player.onGround) {
@@ -328,9 +323,7 @@ function update(timestamp) {
         scoreCD = scoreCoolDown;
     }
 
-    lastTimestamp = timestamp;
     requestAnimationFrame(update);
-
 }
 
 document.addEventListener('keydown', function (event) {
@@ -361,10 +354,7 @@ document.addEventListener('keydown', function (event) {
 
 })
 
-document.addEventListener('keyup', function (event) {
-
-});
-
+setInterval(enablePhysics, 100);
 requestAnimationFrame(update);
 
 function shakeScreen(time) {

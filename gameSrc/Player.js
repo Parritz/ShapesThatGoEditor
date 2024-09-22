@@ -74,17 +74,18 @@ class Player {
 
         this.yv = Math.clamp(this.yv, min, max);
 
-        this.yv += this.gravity * this.gravityDir;
+        this.yv += this.gravity * this.gravityDir * dt;
 
         this.x += this.xv * this.spd * dt;
 
-        if (!this.dead) this.y += this.yv * dt;
-
+        if (!this.dead && physicsTicking) {
+            this.y += this.yv * dt;
+        }
     }
 
     update(){
 
-        for(let p=0;p<this.activePowerups.length;p++){
+        for(p=0;p<this.activePowerups.length;p++){
 
             if(this.activePowerups[p].expireTime <= 0 || this.activePowerups[p].uses == 0){
                 eval("player." + this.activePowerups[p].type + " = false;");
@@ -104,7 +105,7 @@ class Player {
 
     hasPowerup(type){
 
-        for(let p=0;p<player.activePowerups.length;p++){
+        for(p=0;p<player.activePowerups.length;p++){
             if(player.activePowerups[p].type == type){
                 return true;
             }
